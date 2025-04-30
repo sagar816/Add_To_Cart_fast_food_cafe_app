@@ -1,3 +1,5 @@
+import 'package:add_to_cart/components/button.dart';
+import 'package:add_to_cart/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,11 +9,14 @@ class IntroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 138, 60, 55),
+      //w scaffold
+      backgroundColor: primaryColor,
       body: Padding(
+        //w padding
         padding: const EdgeInsets.all(25.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const SizedBox(
               height: 25,
@@ -19,6 +24,7 @@ class IntroPage extends StatelessWidget {
 
             //shop name
             Text(
+              // w text
               "Fast Food",
               style:
                   GoogleFonts.dmSerifDisplay(fontSize: 28, color: Colors.white),
@@ -32,7 +38,7 @@ class IntroPage extends StatelessWidget {
               child: Image.asset('lib/images/tea.png'),
             ),
 
-            const SizedBox(height: 25),
+            const SizedBox(height: 25), // w sized box
 
             //title
 
@@ -41,6 +47,8 @@ class IntroPage extends StatelessWidget {
               style:
                   GoogleFonts.dmSerifDisplay(fontSize: 28, color: Colors.white),
             ),
+
+            const SizedBox(height: 5),
 
             //subtitle
             Text(
@@ -51,7 +59,16 @@ class IntroPage extends StatelessWidget {
               ),
             ),
 
+            const SizedBox(height: 15),
+
             //get started button
+            MyButton(
+              text: "Get Started",
+              onTap: () {
+                // go to menu page
+                Navigator.pushNamed(context, '/menupage');
+              },
+            )
           ],
         ),
       ),
@@ -60,3 +77,8 @@ class IntroPage extends StatelessWidget {
 }
 
 //4.30
+
+//w scaffold
+//w padding
+// w sized box
+// w text 
