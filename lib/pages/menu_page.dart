@@ -1,10 +1,11 @@
 import 'package:add_to_cart/components/button.dart';
 import 'package:add_to_cart/components/food_tile.dart';
-import 'package:add_to_cart/models/food.dart';
+import 'package:add_to_cart/models/shop.dart';
 import 'package:add_to_cart/pages/food_details_page.dart';
 import 'package:add_to_cart/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -14,44 +15,46 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  // food Menu
-  List foodMenu = [
-    // pavbhaji
-    Food(
-        name: "Pav Bhaji",
-        price: "220.00",
-        imagePath: "lib/images/pavbhaji.png",
-        rating: "4.5"),
-
-    // samosa
-    Food(
-        name: "Samosa",
-        price: "40.00",
-        imagePath: "lib/images/samosa.png",
-        rating: "4.3"),
-  ];
-
   // navigate to food item details page
-  void navigateToFoodDetails(int index){ 
-    Navigator.push(context, MaterialPageRoute(builder: (context) => FoodDetailspage(food: foodMenu[index],),),);
-  }
+  void navigateToFoodDetails(int index) {
+    // get the shop and its menu
+    final shop = context.read<Shop>();
+    final foodMenu = shop.foodMenu;
 
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FoodDetailspage(
+          food: foodMenu[index],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    // get the shop and its menu
+    final shop = context.read<Shop>();
+    final foodMenu = shop.foodMenu;
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: Colors.grey[800],
         // elevation: 0,
-        leading: Icon(Icons.menu, color: Colors.grey[900]),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 55),
-          child: Text(
-            "Mumbai Cafe",
-            style: TextStyle(color: Colors.grey[900]),
-          ),
+        leading: const Icon(Icons.menu),
+        title:const Padding(
+          padding: EdgeInsets.only(left: 55),
+          child: Text("Mumbai Cafe"),
         ),
+        actions: [
+          // cart button
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/cartpage');
+              },
+              icon: const Icon(Icons.shopping_cart))
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -219,5 +222,3 @@ class _MenuPageState extends State<MenuPage> {
     );
   }
 }
-
-

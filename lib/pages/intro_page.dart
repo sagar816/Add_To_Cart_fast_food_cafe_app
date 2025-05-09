@@ -19,7 +19,7 @@ class IntroPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const SizedBox(
-              height: 25,
+              height: 25, 
             ),
 
             //shop name

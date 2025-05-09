@@ -1,8 +1,10 @@
 import 'package:add_to_cart/components/button.dart';
 import 'package:add_to_cart/models/food.dart';
+import 'package:add_to_cart/models/shop.dart';
 import 'package:add_to_cart/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class FoodDetailspage extends StatefulWidget {
   final Food food;
@@ -20,7 +22,9 @@ class _FoodDetailspageState extends State<FoodDetailspage> {
   // decrement quantity
   void decrementQuantity() {
     setState(() {
-      quantityCount--;
+      if (quantityCount > 0) {
+        quantityCount--;
+      }
     });
   }
 
@@ -32,7 +36,45 @@ class _FoodDetailspageState extends State<FoodDetailspage> {
   }
 
   // add to cart
-  void addToCart() {}
+  void addToCart() {
+    // only add to cart if there is something in the cart
+    if (quantityCount > 0) {
+      // get access to shop
+      final shop = context.read<Shop>();
+
+      // add to cart
+      shop.addToCart(widget.food, quantityCount);
+
+      // let the user know it was successful
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => AlertDialog(
+            backgroundColor: primaryColor,
+            content: Text(
+              "Successfully added to cart",
+              style: TextStyle(color: Colors.white),
+              textAlign: TextAlign.left,
+            ),
+            actions: [
+              // okay button
+              IconButton(
+                onPressed: () {
+                  // pop once to remove dialog box
+                  Navigator.pop(context);
+
+                  // pop again to go previous screen
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.done,
+                  color: Colors.white,
+                ),
+              )
+            ]),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
